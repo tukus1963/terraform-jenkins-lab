@@ -9,6 +9,19 @@ pipeline {
   }
 
   stages {
+
+    stage('Install Terraform') {
+      steps {
+        bat '''
+          echo Installing Terraform...
+          curl -o terraform.zip https://releases.hashicorp.com/terraform/1.9.5/terraform_1.9.5_windows_amd64.zip
+          tar -xf terraform.zip
+          move terraform.exe C:\\Windows\\System32\\terraform.exe
+          terraform --version
+        '''
+      }
+    }
+
     stage('Checkout Code') {
       steps {
         git branch: 'main', url: 'https://github.com/tukus1963/terraform-jenkins-lab.git'
